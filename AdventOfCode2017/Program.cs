@@ -11,7 +11,7 @@ namespace AdventOfCode2017
     {
         static void Main(string[] args)
         {
-            Milliseconds.Two.Part2();
+            Milliseconds.Three.Part1();
         }
 
 
