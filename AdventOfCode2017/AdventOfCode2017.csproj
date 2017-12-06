@@ -45,6 +45,7 @@
     <Compile Include="Milliseconds\Three.cs" />
     <Compile Include="Milliseconds\One.cs" />
     <Compile Include="Milliseconds\Two.cs" />
+    <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
