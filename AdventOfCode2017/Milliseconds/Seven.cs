@@ -15,17 +15,37 @@ namespace AdventOfCode2017.Milliseconds
             var sortAlg = new QuickGraph.Algorithms.TopologicalSort.TopologicalSortAlgorithm<ProgramNode, Edge<ProgramNode>>(adjacencyGraph);
             sortAlg.Compute();
             ProgramNode root = sortAlg.SortedVertices[0];
+            Console.WriteLine($"Root program node is {root.Name}");
 
-            QuickGraph.Algorithms.TopologicalSort
+            //var node = adjacencyGraph.Vertices.Where(v => v.Name == "exrud").Single();
+            //node.Weight = 171;
+
             var alg = new QuickGraph.Algorithms.Search.DepthFirstSearchAlgorithm<ProgramNode, Edge<ProgramNode>>(adjacencyGraph);
             int currentWeight = 0;
-            alg.DiscoverVertex += (v) => { currentWeight += v.Weight; v.TotalWeight = v.Weight; };
-            
-            alg.TreeEdge += (te) => { te.Source.TotalWeight += te.Target};
-            alg.FinishVertex += (v) => {  };
+            alg.DiscoverVertex += (v) => { currentWeight += v.Weight; };
+            alg.TreeEdge += (te) => {  te.Target.Parent = te.Source; };
+
+            alg.FinishVertex += (v) => {
+                if(v.Name != root.Name) v.Parent.ChildrenWeight += (v.Weight + v.ChildrenWeight);
+                int childNodes = adjacencyGraph.Edges.Where(e => e.Source == v).Count();
+                if (childNodes != 0)
+                {
+                    var groupedEdges = adjacencyGraph.Edges.Where(e => e.Source == v).GroupBy(e => e.Target.Weight + e.Target.ChildrenWeight);
+                    v.Unbalanced = groupedEdges.Count() > 1;
+                    if (v.Unbalanced)
+                    {
+                        Console.WriteLine($"Unbalanced node {v.Name} has {childNodes} children");
+                        foreach (var group in groupedEdges)
+                        {
+                            foreach(var n in group)
+                                Console.WriteLine($"group ({group.Count()}): ({n.Target.Name}) {n.Target.Weight} + {n.Target.ChildrenWeight} = {n.Target.Weight + n.Target.ChildrenWeight}");
+                        }
+                    }
+                }
+            };
             alg.Compute(root);
-            VertexAction<ProgramNode> vertexAction = (n) => { };
-            Console.WriteLine($"Root program node is {root.Name}");
+
+            List<ProgramNode> unbalancedNode = alg.VisitedGraph.Vertices.Where(v => v.Unbalanced == true).ToList();
         }
 
         public static void Part1()
@@ -83,6 +103,8 @@ namespace AdventOfCode2017.Milliseconds
             public string Name { get; set; }
             public int Weight { get; set; }
             public int ChildrenWeight { get; set; }
+            public ProgramNode Parent { get; set; }
+            public bool Unbalanced { get; set; }
         }
 
 
