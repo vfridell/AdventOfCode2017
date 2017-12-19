@@ -55,14 +55,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Milliseconds\Eight.cs" />
+    <Compile Include="Milliseconds\Eleven.cs" />
     <Compile Include="Milliseconds\Five.cs" />
     <Compile Include="Milliseconds\Four.cs" />
+    <Compile Include="Milliseconds\Nine.cs" />
     <Compile Include="Milliseconds\Seven.cs" />
     <Compile Include="Milliseconds\Six.cs" />
+    <Compile Include="Milliseconds\Ten.cs" />
+    <Compile Include="Milliseconds\Thirteen.cs" />
     <Compile Include="Milliseconds\Three.cs" />
     <Compile Include="Milliseconds\One.cs" />
+    <Compile Include="Milliseconds\Twelve.cs" />
     <Compile Include="Milliseconds\Two.cs" />
     <Compile Include="Models\Coordinate.cs" />
+    <Compile Include="Models\Hex.cs" />
+    <Compile Include="Models\Neighborhood.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
